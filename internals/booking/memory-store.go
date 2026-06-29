@@ -11,5 +11,10 @@ func NewMemoryStore() *MemoryStore {
   }
 }
 
-func (s *MemoryStore) Book(b Booking) error
-func (s *MemoryStore) ListBooking(movieID string)  []Booking
+func (s *MemoryStore) Book(b Booking) error {
+  
+}
+
+func (s *MemoryStore) ListBooking(movieID string)  []Booking {
+
+}
