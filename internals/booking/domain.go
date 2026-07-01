@@ -1,6 +1,13 @@
 package booking
 
 
+import "errors"
+
+var (
+	ErrBookingAlreadyExists = errors.New("booking already exists")
+)
+
+
 type Booking struct {
 	ID string
 	MovieID string
