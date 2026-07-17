@@ -1,8 +1,9 @@
 package booking
 
 
-import "errors"
-
+import ( "errors"
+       "time"
+      )
 var (
 	ErrBookingAlreadyExists = errors.New("booking already exists")
 )
@@ -14,9 +15,11 @@ type Booking struct {
 	SeatID string
 	UserID string
 	Status string
+	ExpiresAt time.Time
 }
+
 
 type BookingStore interface {
 	Book(b Booking) error
-	ListBooking(movieID string)  []Booking
+	ListBookings(movieID string) []Booking
 }

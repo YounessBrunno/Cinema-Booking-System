@@ -23,7 +23,7 @@ func (s *MemoryStore) Book(b Booking) error {
   return nil
 }
 
-func (s *MemoryStore) ListBooking(movieID string)  []Booking {
+func (s *MemoryStore) ListBookings(movieID string)  []Booking {
   var bookings []Booking
 
   for _, booking := range s.bookings {
