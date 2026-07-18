@@ -53,9 +53,21 @@ func (s *RedisStore) hold(b Booking) (Booking, error) {
    Time := time.Now()
    ctx := context.Background()
    key := fmt.Sprintf("seat:%s:%s", b.MovieID, b.SeatID)
-   value, _ := json.Marshal() 
+   b.ID = id
+   value, _ := json.Marshal(b)
     
-   s.rdb.SetArgs(ctx, key)
+   res := s.rdb.SetArgs(ctx, key, value, redis.SetArgs{
+	   Mode: "NX",
+	   TTL:  defaultHoldTTL,
+   })
+
+   ok := res.Val() == "OK"
+
+   if !ok {
+     return Booking{}, ErrBookingAlreadyExists
+   }
+
+   s.rdb.Set(ctx, sessionKey(id), key, defaultHoldTTL)
    
    return Booking{
      ID:      id,
