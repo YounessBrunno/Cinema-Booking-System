@@ -2,11 +2,12 @@ package booking
 
 
 import ( "errors"
-       "time"
-      )
+         "time"
+	   )
+
 var (
-	ErrBookingAlreadyExists = errors.New("booking already exists")
-)
+	  ErrBookingAlreadyExists = errors.New("booking already exists")
+    )
 
 
 type Booking struct {
