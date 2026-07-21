@@ -1,18 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
-   "encoding/json"
+
+	"github.com/YounessBrunno/Cinema-Booking-System/internals/booking"
 )
 
 func main() {
 	mux := http.NewServeMux()
-
 	mux.HandleFunc("GET /movies", listMovies)
-   mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-      	WriteJSON(w, http.StatusOK, "Welcome to the Movie API!")
-   })
+    mux.Handle("GET /", http.FileServer(http.Dir("static")))
+
+
+	store := booking.NewRedisStore(redis.NewClient("localhost:6379"))
+	svc := booking.NewService(store)
+    handler := booking.NewHandler(svc)
 
 
 	if err := http.ListenAndServe(":8080", mux); err != nil {

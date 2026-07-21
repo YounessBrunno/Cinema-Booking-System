@@ -8,7 +8,7 @@ type Service struct {
 
 func NewService(store BookingStore) *Service {
   return &Service{
-	store: store,
+	 store: store,
   }
 }
 
