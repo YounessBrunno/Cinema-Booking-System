@@ -16,7 +16,8 @@ func NewHandler(svc *Service) *Handler {
 
 
 func (h *Handler) ListSeats(w http.ResponseWriter, r *http.Request)  {
-  
+   
+   h.svc.store.ListBookings("")
 }
 
 type movieResponse struct {
