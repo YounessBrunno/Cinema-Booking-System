@@ -1,8 +1,8 @@
 package booking
 
 import (
-	    "net/http"
-		"encoding/json"
+       "net/http"
+       "github.com/YounessBrunno/Cinema-Booking-System/internals/json"
 	   )
 
  
@@ -36,13 +36,6 @@ var movies = []movieResponse{
 
 func (h *Handler) ListMovies(w http.ResponseWriter, r *http.Request) {
 
-	WriteJSON(w, http.StatusOK, movies)
+	json.WriteJSON(w, http.StatusOK, movies)
 }
 
-func WriteJSON(w http.ResponseWriter, status int, data interface{}) error {
-
-   w.Header().Set("Content-Type", "application/json")
-   w.WriteHeader(status)
-   
-   return json.NewEncoder(w).Encode(data)
-}
