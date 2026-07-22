@@ -20,7 +20,22 @@ func (h *Handler) ListSeats(w http.ResponseWriter, r *http.Request)  {
 
    bookings := h.svc.store.ListBookings(MovieId)
 
-   json.WriteJSON(w, http.StatusOK, bookings)
+   seats := make([]seatInfo, 0, len(bookings))
+   for _, b := range bookings {
+      seats = append(seats, seatInfo{
+         SeatID: b.SeatID,
+         UserID: b.UserID,
+         Booked: true,
+      })
+   }
+
+   json.WriteJSON(w, http.StatusOK, seats)
+}
+
+type seatInfo struct {
+   SeatID string `json:"seat_id"`
+   UserID string `json:"user_id"`
+   Booked bool   `json:"booked"`
 }
 
 type movieResponse struct {
