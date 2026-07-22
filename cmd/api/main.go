@@ -18,7 +18,7 @@ func main() {
 
     mux.HandleFunc("GET /movies", bookingHandler.ListMovies)
     mux.Handle("GET /", http.FileServer(http.Dir("static")))
-	mux.HandleFunc("GET /seats/", bookingHandler.ListSeats)
+	mux.HandleFunc("GET /seats/:MovieId/", bookingHandler.ListSeats)
   
 
 
