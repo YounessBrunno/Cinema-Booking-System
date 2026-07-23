@@ -20,8 +20,8 @@ func main() {
     mux.Handle("GET /", http.FileServer(http.Dir("static")))
 	mux.HandleFunc("GET /movies/{MovieID}/seats", bookingHandler.ListSeats)
 	mux.HandleFunc("POST /movies/{MovieID}/seats/{SeatID}/hold", bookingHandler.HoldSeat)
-	mux.HandleFunc("POST /sessions/{SessionID}/confirm", bookingHandler.ConfirmSeat)
-	mux.HandleFunc("DELETE /sessions/{SessionID}", bookingHandler.ReleaseSeat)
+	mux.HandleFunc("POST /sessions/{SessionID}/confirm", bookingHandler.ConfirmSession)
+	mux.HandleFunc("DELETE /sessions/{SessionID}", bookingHandler.ReleaseSession)
   
 
 
