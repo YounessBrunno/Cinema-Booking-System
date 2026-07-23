@@ -2,7 +2,9 @@ package booking
 
 import (
        "net/http"
-       "github.com/YounessBrunno/Cinema-Booking-System/internals/json"
+       "time"
+       "encoding/json"
+       jsonx "github.com/YounessBrunno/Cinema-Booking-System/internals/json"
 	   )
 
  
@@ -29,11 +31,48 @@ func (h *Handler) ListSeats(w http.ResponseWriter, r *http.Request)  {
       })
    }
 
-   json.WriteJSON(w, http.StatusOK, seats)
+   jsonx.WriteJSON(w, http.StatusOK, seats)
 }
 
 func (h *Handler) HoldSeat(w http.ResponseWriter, r *http.Request)  {
-   
+   movieId := r.PathValue("MovieID")
+   seatId := r.PathValue("SeatID")
+
+   type holdRequest struct {
+      UserID string `json:"user_id"`
+   }
+
+   var req holdRequest
+
+   if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+      jsonx.WriteJSON(w, http.StatusBadRequest, map[string]string{"error": "Invalid request body"})
+      return
+   }
+
+   session, err := h.svc.Book(Booking{
+      MovieID: movieId,
+      SeatID:  seatId,
+      UserID:  req.UserID,
+   })
+
+   if err != nil {
+      jsonx.WriteJSON(w, http.StatusInternalServerError, map[string]string{"error": "Failed to book seat"})
+      return
+   }
+
+   type holdResponse struct {
+      SessionID string `json:"session_id"`
+      MovieID string `json:"movie_id"`
+      SeatID string `json:"seat_id"`
+      ExpiresAt string `json:"expires_at"`
+   }
+
+   jsonx.WriteJSON(w, http.StatusOK, holdResponse{
+      SeatID: seatId,
+      MovieID: session.MovieID,
+      SessionID: session.ID,
+      ExpiresAt: session.ExpiresAt.Format(time.RFC3339),
+   })
 
 }
 
@@ -59,6 +98,6 @@ var movies = []movieResponse{
 
 func (h *Handler) ListMovies(w http.ResponseWriter, r *http.Request) {
 
-	json.WriteJSON(w, http.StatusOK, movies)
+	jsonx.WriteJSON(w, http.StatusOK, movies)
 }
 

@@ -12,13 +12,17 @@ func NewService(store BookingStore) *Service {
   }
 }
 
-func (s *Service) Book(booking Booking) error {
+func (s *Service) Book(booking Booking) (Booking, error) {
 
-   if err := s.store.Book(booking); err != nil {
-	 return err
+   session, err := s.store.Book(booking); 
+   
+   if err != nil {
+      return Booking{}, err
    }
+	 
+  
 
-   return nil
+   return session, nil
 }
 
 func (s *Service) Hold(booking Booking) error {
