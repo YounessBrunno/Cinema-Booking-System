@@ -32,6 +32,16 @@ func (s *Service) Hold(booking Booking) error {
    return nil
 }
 
+func (s *Service) Confirm(sessionID string) error {
+
+   return nil
+}
+
+func (s *Service) Release(sessionID string) error {
+
+   return nil
+}
+
 func (s *Service) ListBookings(movieID string) []Booking {
    return s.store.ListBookings(movieID)
 }

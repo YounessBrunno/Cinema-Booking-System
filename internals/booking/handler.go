@@ -76,6 +76,20 @@ func (h *Handler) HoldSeat(w http.ResponseWriter, r *http.Request)  {
 
 }
 
+func (h *Handler) ConfirmSeat(w http.ResponseWriter, r *http.Request)  {
+   sessionId := r.PathValue("SessionID")  
+
+   
+   h.svc.Confirm(sessionId)
+}
+
+func (h *Handler) ReleaseSeat(w http.ResponseWriter, r *http.Request)  {
+   sessionId := r.PathValue("SessionID")
+
+   h.svc.Release(sessionId)
+}
+
+
 type seatInfo struct {
    SeatID string `json:"seat_id"`
    UserID string `json:"user_id"`
