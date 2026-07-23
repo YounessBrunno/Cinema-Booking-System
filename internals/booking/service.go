@@ -21,6 +21,12 @@ func (s *Service) Book(booking Booking) error {
    return nil
 }
 
+func (s *Service) Hold(booking Booking) error {
+
+   
+
+   return nil
+}
 
 func (s *Service) ListBookings(movieID string) []Booking {
    return s.store.ListBookings(movieID)

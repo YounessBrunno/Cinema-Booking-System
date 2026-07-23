@@ -16,7 +16,7 @@ func NewHandler(svc *Service) *Handler {
 
 
 func (h *Handler) ListSeats(w http.ResponseWriter, r *http.Request)  {
-   MovieId := r.PathValue("MovieId")
+   MovieId := r.PathValue("MovieID")
 
    bookings := h.svc.store.ListBookings(MovieId)
 
@@ -30,6 +30,11 @@ func (h *Handler) ListSeats(w http.ResponseWriter, r *http.Request)  {
    }
 
    json.WriteJSON(w, http.StatusOK, seats)
+}
+
+func (h *Handler) HoldSeat(w http.ResponseWriter, r *http.Request)  {
+   
+
 }
 
 type seatInfo struct {
